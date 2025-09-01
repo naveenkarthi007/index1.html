@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern HTML Starter</title>
+  <meta name="description" content="A clean, responsive HTML starter you can copy and customize." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: #12151a;
+      --text: #e6e7ea;
+      --muted: #9aa0a6;
+      --brand: #6ea8fe;
+      --brand-2: #61d5a7;
+      --ring: rgba(110,168,254,.45);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .light {
+      --bg: #f7f7fb;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #4b5563;
+      --ring: rgba(99,102,241,.25);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid color-mix(in oklab, var(--text) 12%, transparent);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .nav a { padding: 10px 12px; border-radius: 10px; }
+    .nav a:hover { background: color-mix(in oklab, var(--text) 8%, transparent); }
+    .brand { display: flex; gap: 10px; align-items: center; font-weight: 700; letter-spacing: .2px; }
+    .brand .logo { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius); border: 0; cursor: pointer; background: var(--brand); color: #0b0c10; font-weight: 600; box-shadow: var(--shadow); }
+    .btn.ghost { background: transparent; color: var(--text); border: 1px solid color-mix(in oklab, var(--text) 15%, transparent); box-shadow: none; }
+    .btn:focus { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+    .hero { display: grid; gap: 16px; padding: 56px 0 24px; }
+    .title { font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin: 0; }
+    .subtitle { color: var(--muted); margin-top: 6px; max-width: 60ch; }
+
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .card { grid-column: span 12; background: var(--panel); border: 1px solid color-mix(in oklab, var(--text) 10%, transparent); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+    @media (min-width: 640px) { .card.sm-6 { grid-column: span 6; } }
+    @media (min-width: 960px) { .card.md-4 { grid-column: span 4; } }
+
+    .kicker { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .card h3 { margin: 8px 0 8px; }
+
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    pre { padding: 16px; border-radius: 12px; background: #0a0e14; overflow: auto; border: 1px solid #1f2937; }
+
+    form { display: grid; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-weight: 600; }
+    .field input, .field select, .field textarea {
+      padding: 10px 12px; border-radius: 12px; border: 1px solid color-mix(in oklab, var(--text) 18%, transparent);
+      background: transparent; color: var(--text);
+    }
+    .field input:focus, .field textarea:focus, .field select:focus { outline: 3px solid var(--ring); border-color: transparent; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid color-mix(in oklab, var(--text) 12%, transparent); text-align: left; }
+    th { color: var(--muted); font-weight: 600; }
+
+    footer { padding: 28px 0 56px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Main">
+      <div class="brand"><span class="logo" aria-hidden="true"></span><span>Starter</span></div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#form">Form</a>
+        <a href="#table">Table</a>
+        <button class="btn ghost" id="themeToggle" aria-pressed="false" aria-label="Toggle theme">Toggle theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="top">
+      <p class="kicker">Ready to paste</p>
+      <h1 class="title">A clean, responsive <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">HTML starter</span></h1>
+      <p class="subtitle">Drop this file into your project and start customizing. It includes a sticky header, cards, a form, a table, and a tiny bit of JavaScript for interactivity.</p>
+      <div style="display:flex; gap:10px; flex-wrap: wrap">
+        <a class="btn" href="#features">Explore Components</a>
+        <a class="btn ghost" href="#code">View Markup</a>
+      </div>
+    </section>
+
+    <section id="features" class="grid" aria-label="Feature cards">
+      <article class="card sm-6 md-4">
+        <p class="kicker">Layout</p>
+        <h3>Responsive grid</h3>
+        <p>12‑column fluid grid with small helpers: <code>.sm-6</code> and <code>.md-4</code> to change spans on larger screens.</p>
+      </article>
+      <article class="card sm-6 md-4">
+        <p class="kicker">Styling</p>
+        <h3>Design tokens</h3>
+        <p>CSS variables power color, radius, shadows. Toggle light/dark with one class on <code>&lt;body&gt;</code>.</p>
+      </article>
+      <article class="card sm-6 md-4">
+        <p class="kicker">A11y</p>
+        <h3>Accessible by default</h3>
+        <p>Semantic HTML, focus rings, labels, and ARIA where it helps—not where it gets in the way.</p>
+      </article>
+    </section>
+
+    <section id="form" class="grid" style="margin-top: 24px">
+      <article class="card sm-6">
+        <p class="kicker">Form</p>
+        <h3>Contact form</h3>
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" required placeholder="Your name" />
+            <small class="hint" aria-live="polite"></small>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@example.com" />
+            <small class="hint" aria-live="polite"></small>
+          </div>
+          <div class="field">
+            <label for="topic">Topic</label>
+            <select id="topic" name="topic">
+              <option>General</option>
+              <option>Support</option>
+              <option>Feedback</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="How can we help?" required></textarea>
+            <small class="hint" aria-live="polite"></small>
+          </div>
+          <button class="btn" type="submit">Send</button>
+        </form>
+        <p id="formStatus" role="status" style="margin-top:10px;color:var(--muted)"></p>
+      </article>
+
+      <article class="card sm-6" id="table">
+        <p class="kicker">Table</p>
+        <h3>Sample data table</h3>
+        <table aria-describedby="tableCaption">
+          <caption id="tableCaption" style="text-align:left; color:var(--muted); padding:8px 0">Lightweight table with borders.</caption>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Notebook</td><td>3</td><td>$9.99</td></tr>
+            <tr><td>Pen Set</td><td>2</td><td>$5.49</td></tr>
+            <tr><td>Backpack</td><td>1</td><td>$39.00</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </section>
+
+    <section id="code" class="card" style="margin-top:24px">
+      <p class="kicker">Snippet</p>
+      <h3>Copy a component</h3>
+      <pre><code>&lt;button class="btn"&gt;Click me&lt;/button&gt;</code></pre>
+      <pre><code>&lt;article class="card"&gt;...&lt;/article&gt;</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Built with ♥ — swap to light mode to see the difference.
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const body = document.body;
+    const toggle = document.getElementById('themeToggle');
+    toggle?.addEventListener('click', () => {
+      const isLight = body.classList.toggle('light');
+      toggle.setAttribute('aria-pressed', String(isLight));
+      localStorage.setItem('prefers-light', isLight ? '1' : '0');
+    });
+    // Persist theme
+    if (localStorage.getItem('prefers-light') === '1') {
+      body.classList.add('light');
+      toggle?.setAttribute('aria-pressed', 'true');
+    }
+
+    // Minimal form validation
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+      form.querySelectorAll('[required]')?.forEach((el) => {
+        const hint = el.parentElement.querySelector('.hint');
+        if (!el.value.trim()) { valid = false; hint.textContent = 'Required'; }
+        else { hint.textContent = ''; }
+      });
+      if (valid) {
+        status.textContent = 'Thanks! This is a demo — hook up your backend here.';
+        form.reset();
+      } else {
+        status.textContent = 'Please fill in the required fields.';
+      }
+    });
+  </script>
+</body>
+</html>
