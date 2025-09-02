@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Registration Form</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, -apple-system, Roboto, "Helvetica Neue", Arial;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center / cover;
+    }
+    .card {
+      background: rgb(57, 109, 165); /* semi-transparent for readability */
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.08);
+      width: 100%;
+      max-width: 420px;
+      color: #fff;
+    }
+    h1 {
+      font-size: 1.25rem;
+      margin: 0 0 8px;
+    }
+    p.lead {
+      margin: 0 0 16px;
+      color: #f0f0f0;
+      font-size: 0.95rem;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+    .row {
+      display: grid;
+      gap: 12px;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    button {
+      background: #2563eb;
+      border: none;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid #e5e7eb;
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: #fdfeff;
+    }
+    .error {
+      color: #ffb4b4;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+    .success {
+      background: #eefeff;
+      border: 1px solid #67e8f9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 12px;
+      color: #064e3b;
+    }
+    .pw-toggle {
+      background: none;
+      border: 0;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 6px;
+      color: #ffffff;
+    }
+    .pw-meter {
+      height: 8px;
+      border-radius: 999px;
+      background: #e6e6e6;
+      overflow: hidden;
+    }
+    .pw-meter > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg,#fb923c,#10b981);
+    }
+    small {
+      display: block;
+      margin-top: 6px;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main"> 
+    <h1>Sign up</h1>
+    <p class="lead">Create an account with your name, email and a strong password.</p>
+    <form id="regForm" novalidate>
+      <div class="row">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Naveen Kumar" required aria-required="true" />
+          <div class="error" id="nameError" aria-live="polite" style="display:none"></div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="xxx@example.com" required aria-required="true" />
+          <div class="error" id="emailError" aria-live="polite" style="display:none"></div>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="password" name="password" type="password" placeholder="Minimum 8 characters" required aria-required="true" />
+            <button type="button" class="pw-toggle" id="togglePw" aria-pressed="false">Show</button>
+          </div>
+          <div style="margin-top:8px">
+            <div class="pw-meter" aria-hidden="true"><i id="pwBar"></i></div>
+            <small id="pwHint">Use at least 8 characters, including letters and numbers.</small>
+          </div>
+          <div class="error" id="pwError" aria-live="polite" style="display:none"></div>
+        </div>
+        <div class="field">
+          <label for="confirm">Confirm password</label>
+          <input id="confirm" name="confirm" type="password" placeholder="Re-type password" required aria-required="true" />
+          <div class="error" id="confirmError" aria-live="polite" style="display:none"></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit">Create account</button>
+        <button type="button" class="secondary" id="resetBtn">Reset</button>
+      </div>
+      <div id="result" role="status" aria-live="polite"></div>
+    </form>
+    <p class="hint">This is a demo form — it does not send data to a server. Use this as a starting point.</p>
+  </main>
+  <script>
+    const form = document.getElementById('regForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const pwInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirm');
+    const pwBar = document.getElementById('pwBar');
+    const togglePw = document.getElementById('togglePw');
+    const result = document.getElementById('result');
+
+    function showError(elId, message){
+      const el = document.getElementById(elId);
+      if(!message){ el.style.display = 'none'; el.textContent = ''; return; }
+      el.style.display = 'block'; el.textContent = message;
+    }
+
+    function passwordStrength(pw){
+      let score = 0;
+      if(pw.length >= 8) score += 1;
+      if(/[a-z]/.test(pw) && /[A-Z]/.test(pw)) score += 1;
+      if(/[0-9]/.test(pw)) score += 1;
+      if(/[^A-Za-z0-9]/.test(pw)) score += 1;
+      return Math.min(100, (score / 4) * 100);
+    }
+
+    pwInput.addEventListener('input', ()=>{
+      const val = pwInput.value;
+      const pct = passwordStrength(val);
+      pwBar.style.width = pct + '%';
+      pwBar.parentElement.setAttribute('aria-label', `password strength ${Math.round(pct)} percent`);
+    });
+
+    togglePw.addEventListener('click', ()=>{
+      const isHidden = pwInput.type === 'password';
+      pwInput.type = isHidden ? 'text' : 'password';
+      confirmInput.type = isHidden ? 'text' : 'password';
+      togglePw.textContent = isHidden ? 'Hide' : 'Show';
+      togglePw.setAttribute('aria-pressed', String(isHidden));
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      form.reset();
+      showError('nameError',''); showError('emailError',''); showError('pwError',''); showError('confirmError','');
+      pwBar.style.width = '0%'; result.innerHTML = '';
+    });
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      showError('nameError',''); showError('emailError',''); showError('pwError',''); showError('confirmError',''); result.innerHTML = '';
+      let valid = true;
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const pw = pwInput.value;
+      const confirm = confirmInput.value;
+      if(name.length < 2){ showError('nameError','Please enter your full name.'); valid = false; }
+      if(!/^\S+@\S+\.\S+$/.test(email)){ showError('emailError','Please enter a valid email address.'); valid = false; }
+      if(pw.length < 8){ showError('pwError','Password must be at least 8 characters.'); valid = false; }
+      if(pw !== confirm){ showError('confirmError','Passwords do not match.'); valid = false; }
+      if(!valid) return;
+      result.innerHTML = `<div class="success">Account created!<br><strong>Name:</strong> ${escapeHtml(name)}<br><strong>Email:</strong> ${escapeHtml(email)}</div>`;
+    });
+
+    function escapeHtml(str){
+      return str.replace(/[&<>"']/g, s => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":"&#39;"
+      })[s]);
+    }
+  </script>
+</body>
+</html>

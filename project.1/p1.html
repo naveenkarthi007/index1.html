@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Form</title>
+<style>
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d') no-repeat center center / cover;
+    font-family: Arial, sans-serif;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0px;
+    padding-left: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+      margin-right: 10px 15px;
+      margin-left: 10px;
+  }
+  h2{
+    justify-content: center;
+    padding-left: 110px;
+  }
+  button { 
+    width: 100%;
+    padding: 10px;
+    background: #0a8873;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+     margin-right: 10px 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h2 >Create Account</h2>
+    <input type="text" placeholder="Name">
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <button>Create Account </button>
+  </div>
+</body>
+</html>
